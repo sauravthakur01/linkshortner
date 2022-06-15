@@ -8,22 +8,24 @@ const LinkResult = ({ inputValue }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const res = await axios(`https://api.shrtco.de/v2/shorten?url=${inputValue}`);
-      setShortenLink(res.data.result.full_short_link);
-    } catch(err) {
-      setError(err);
-    } finally {
-      setLoading(false);
-    }
-  }
+  
 
   useEffect(() => {
     if(inputValue.length) {
+      const fetchData = async () => {
+        try {
+          setLoading(true);
+          const res = await axios(`https://api.shrtco.de/v2/shorten?url=${inputValue}`);
+          setShortenLink(res.data.result.full_short_link);
+        } catch(err) {
+          setError(err);
+        } finally {
+          setLoading(false);
+        }
+      }
       fetchData();
     }
+    
   }, [inputValue]);
 
   useEffect(() => {
